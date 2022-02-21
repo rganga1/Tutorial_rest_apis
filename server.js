@@ -24,6 +24,7 @@ db.sequelize.sync({force:true}).then(()=>{console.log("Drop and re-sync db");});
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to esparkinfo application." });
 });
+require("./routes/tutorial.route")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
