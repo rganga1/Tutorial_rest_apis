@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
+const gcl=require("get-current-line").default;
 const app = express();
 
 var corsOptions = {
@@ -14,17 +14,18 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
-//import sequelize db
-const db=require("./models")
-db.sequelize.sync({force:true}).then(()=>{console.log("Drop and re-sync db");});
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to esparkinfo application." });
+  res.json({ message: "Welcome" });
 });
 require("./routes/tutorial.route")(app);
+
+//import sequelize db
+const db=require("./models")
+db.sequelize.sync({force:false}).then(()=>{console.log("Drop and re-sync db",gcl());});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

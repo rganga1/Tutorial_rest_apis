@@ -1,7 +1,9 @@
 module.exports = (app) => {
   const tutorials = require("../controllers/tutorial.controller.js");
   var router = require("express").Router();
-  
+  const gcl=require("get-current-line").default;
+  app.use("/api/tutorials", router);
+  console.log("here",gcl());
   // Create a new Tutorial
   router.post("/", tutorials.create);
 
@@ -23,5 +25,4 @@ module.exports = (app) => {
   // Create a new Tutorial
   router.delete("/", tutorials.deleteAll);
 
-  app.use("/api/tutorials", router);
 };

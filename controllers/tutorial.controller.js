@@ -1,7 +1,8 @@
 const db = require("../models"); // models path depend on your structure
 const Tutorial = db.tutorials;
-
+const gcl=require("get-current-line").default;
 exports.create = (req, res) => {
+// Tutorial.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
     res.status(400).send({
@@ -9,14 +10,14 @@ exports.create = (req, res) => {
     });
     return;
   }
-
+  // console.log(req.body.title,gcl());
   // Create a Tutorial
   const tutorial = {
     title: req.body.title,
     description: req.body.description,
     published: req.body.published ? req.body.published : false,
   };
-
+  // console.log(tutorial,gcl());
   // Save Tutorial in the database
   Tutorial.create(tutorial)
     .then((data) => {
@@ -31,6 +32,7 @@ exports.create = (req, res) => {
 };
 
 //Retrieving all objects - findall
+// Tutorial.findAll = (req, res) => {
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
@@ -48,6 +50,7 @@ exports.findAll = (req, res) => {
 };
 
 //Retrieving single object - findone
+// Tutorial.findOne = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
@@ -63,6 +66,7 @@ exports.findOne = (req, res) => {
 };
 
 //Updating an object
+// Tutorial.update = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -88,6 +92,7 @@ exports.update = (req, res) => {
 };
 
 //Delete - destroy
+// Tutorial.delete = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
@@ -113,6 +118,7 @@ exports.delete = (req, res) => {
 };
 
 //Delete all
+// Tutorial.deleteAll = (req, res) => {
 exports.deleteAll = (req, res) => {
   Tutorial.destroy({
     where: {},
@@ -130,6 +136,7 @@ exports.deleteAll = (req, res) => {
 };
 
 //Finding all Objects by Condition
+// Tutorial.findAllPublished = (req, res) => {
 exports.findAllPublished = (req, res) => {
   Tutorial.findAll({ where: { published: true } })
     .then((data) => {
@@ -143,3 +150,4 @@ exports.findAllPublished = (req, res) => {
     });
 };
 
+// module.exports=Tutorial;
