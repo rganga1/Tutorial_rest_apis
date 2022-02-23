@@ -1,8 +1,8 @@
+const { sequelize } = require("../models");
 const db = require("../models"); // models path depend on your structure
 const Tutorial = db.tutorials;
 const gcl=require("get-current-line").default;
-exports.create = (req, res) => {
-// Tutorial.create = (req, res) => {
+exports.create = async (req, res) => {
   // Validate request
   if (!req.body.title) {
     res.status(400).send({
@@ -17,18 +17,21 @@ exports.create = (req, res) => {
     description: req.body.description,
     published: req.body.published ? req.body.published : false,
   };
+  const [result,metadata]= sequelize.query(`INSERT INTO tutorial (title, description, published) VALUES(${title},${description},${published});`);
+  console.log(result);
+  res.send("Added");
   // console.log(tutorial,gcl());
   // Save Tutorial in the database
-  Tutorial.create(tutorial)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Tutorial.",
-      });
-    });
+  // Tutorial.create(tutorial)
+  //   .then((data) => {
+  //     res.send(data);
+  //   })
+  //   .catch((err) => {
+  //     res.status(500).send({
+  //       message:
+  //         err.message || "Some error occurred while creating the Tutorial.",
+  //     });
+  //   });
 };
 
 //Retrieving all objects - findall

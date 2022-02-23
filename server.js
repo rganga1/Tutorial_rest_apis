@@ -25,7 +25,7 @@ require("./routes/tutorial.route")(app);
 
 //import sequelize db
 const db=require("./models")
-db.sequelize.sync({force:false}).then(()=>{console.log("Drop and re-sync db",gcl());});
+db.sequelize.sync({force:true}).then(()=>{console.log("Drop and re-sync db",gcl());});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
